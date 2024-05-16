@@ -32,11 +32,9 @@ while (1):
         .collection("buttons") \
         .document("h1u6Kphf4eJHCrvGqRsi")
 
-    with open("light_1.txt", "r") as file:
+    with open("/dev/redled3", "r") as file:
         lamp_1_curr = file.read(1)
-        print("File 1 : ", lamp_1_curr, " >  ", lamp_1_prev)
-
-    print(".......")
+        print("File 1 : ", lamp_1_curr, " >  ", lamp_1_prev, "\n")
 
     # Get the document
     doc = light_1_doc.get()
@@ -44,15 +42,11 @@ while (1):
     light_1_curr = light_1_curr.get("boolVal")
 
     if ((light_1_curr != light_1_prev) and (lamp_1_curr == lamp_1_prev)):
-        print("Light 1 : ", light_1_curr)
+        print("/dev/redled3: ", light_1_curr)
         with open("light_1.txt", "w") as file:
             file.write(str(light_1_curr))
         light_1_prev = light_1_curr
-        lamp_1_curr = light_1_curr
-        lamp_1_prev = lamp_1_curr
     elif ((lamp_1_prev != lamp_1_curr)):
         print("Lamp_1 : ", lamp_1_curr)
         light_1_doc.update({"boolVal": int(lamp_1_curr)})
         lamp_1_prev = lamp_1_curr
-        light_1_curr = lamp_1_curr
-        light_1_prev = light_1_curr
